@@ -15,5 +15,28 @@
 <style>
     img {
         width: 200px;
+        margin: 5px;
+    }
+
+    h2 {
+        font-family: "Urbanist", sans-serif;
+        font-weight: 500;
+        font-size: 1.6rem;
+    }
+
+    h3 {
+        font-family: "Urbanist", sans-serif;
+        font-weight: 400;
+        font-size: 1.3rem;
+    }
+
+    p {
+        font-family: "Urbanist", sans-serif;
+        font-weight: 400;
+        font-size: 1.1rem;
+    }
+
+    main {
+        margin: 20px;
     }
 </style>
