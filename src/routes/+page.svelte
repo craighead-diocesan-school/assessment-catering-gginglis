@@ -1,7 +1,6 @@
 <script>
   import Header from "$lib/Header.svelte";
   import Item from "$lib/Item.svelte";
-  import { onMount } from "svelte";
 
   async function getMenu() {
     let menuData = await fetch(
@@ -13,27 +12,24 @@
 
   let custom = [];
 
-  function selectedItem() {
-    selected = !selected;
-  }
+  let gst = 0.15;
+
+  let addedGst = 0;
 
   function addToMenu(food) {
     custom = [...custom, food];
-    calculateGst;
+    addedGst = food.price * gst;
   }
 
   function removeFromMenu(index) {
     custom = [...custom.slice(0, index), ...custom.slice(index + 1)];
   }
 
-  let gst = 0.15;
-
-  function calculateGst() {
-    gst = 0;
-    for (let gst of food) {
-      gst = food.price * gst;
-    }
+  function selectedItem() {
+    selected = !selected;
   }
+
+  let customName = [];
 </script>
 
 <head>
@@ -78,10 +74,17 @@
       {/await}
     </div>
     <div class="column">
-      <h2>custom menu</h2>
+      <h2>{customName}</h2>
+      <h3>
+        <input
+          type="text"
+          bind:value={customName}
+          placeholder="enter custom menu name"
+        />
+      </h3>
       {#if custom.length >= 1}
         {#each custom as chosen, index}
-          <p>${gst}</p>
+          <p>GST = ${addedGst.toFixed(2)}</p>
           <Item {...chosen} />
           <button
             on:click={() => {
