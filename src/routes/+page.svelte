@@ -12,21 +12,16 @@
 
   let custom = [];
 
-  let gst = 0.15;
+  // let selected = !selected;
 
-  let addedGst = 0;
+  let gst = 0.15;
 
   function addToMenu(food) {
     custom = [...custom, food];
-    addedGst = food.price * gst;
   }
 
   function removeFromMenu(index) {
     custom = [...custom.slice(0, index), ...custom.slice(index + 1)];
-  }
-
-  function selectedItem() {
-    selected = !selected;
   }
 
   let customName = [];
@@ -79,13 +74,19 @@
         <input
           type="text"
           bind:value={customName}
-          placeholder="enter custom menu name"
+          placeholder="enter menu name"
         />
       </h3>
       {#if custom.length >= 1}
         {#each custom as chosen, index}
-          <p>GST = ${addedGst.toFixed(2)}</p>
-          <Item {...chosen} />
+          <!-- <p>GST = ${addedGst.toFixed(2)}</p> -->
+          <!-- <Item {...chosen} p{chosen.price * gst} /> -->
+          <Item
+            item={chosen.item}
+            description={chosen.description}
+            price={`${chosen.price} + $${(chosen.price * gst).toFixed(2)} GST`}
+            img={chosen.img}
+          />
           <button
             on:click={() => {
               removeFromMenu(index);
@@ -112,13 +113,41 @@
     color: rgb(147, 175, 147);
     text-shadow: 0.7px 0.7px rgb(82, 118, 82);
   }
+
   .highlight {
-    background-color: rgb(147, 175, 147);
+    background-color: rgba(147, 175, 147, 0.738);
   }
 
   p {
     font-family: "Urbanist", sans-serif;
     font-weight: 400;
     font-size: 1.1rem;
+  }
+
+  button {
+    font-family: "Urbanist", sans-serif;
+    font-weight: 500;
+    font-size: 1.1rem;
+    background-color: rgb(147, 175, 147);
+    color: rgb(255, 255, 255);
+    text-shadow: 0.7px 0.7px rgb(82, 118, 82);
+    border: solid rgb(111, 144, 111) 2px;
+    border-radius: 10px;
+    margin-left: 20px;
+    transition: 0.2s;
+    padding: 3px 10px;
+  }
+
+  button:hover {
+    background-color: rgb(111, 144, 111);
+    transition: 0.2s;
+  }
+
+  button:disabled {
+    color: rgba(255, 255, 255, 0.565);
+    background-color: rgba(111, 144, 111, 0.353);
+    border: solid rgb(111, 144, 111, 0.353) 2px;
+    text-shadow: 0.7px 0.7px rgba(82, 118, 82, 0.733);
+    transition: 0.2s;
   }
 </style>

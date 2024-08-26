@@ -14,7 +14,7 @@
 
 <style>
     img {
-        width: 200px;
+        height: 200px;
         margin: 5px;
     }
 
