@@ -38,5 +38,7 @@
 
     main {
         margin: 20px;
+        padding: 10px;
+        transition: 0.25s;
     }
 </style>

@@ -14,23 +14,25 @@
 
   let gst = 0.15;
 
-  // let selected = false;
+  let customName = [];
+  // let food.selected = false;
 
-  function highlightSelected() {
-    selected = !selected;
-  }
+  // function highlightSelected() {
+  // food.selected = !food.selected;
+  // }
 
   function addToMenu(food) {
     custom = [...custom, food];
-    highlightSelected();
+    food.selected = true;
+    menu = menu;
+    // highlightSelected(food);
   }
 
-  function removeFromMenu(index) {
+  function removeFromMenu(index, food) {
     custom = [...custom.slice(0, index), ...custom.slice(index + 1)];
-    custom[index].selected = false;
+    food.selected = false;
+    menu = menu;
   }
-
-  let customName = [];
 </script>
 
 <head>
@@ -48,12 +50,12 @@
       {#await menu}
         loading
       {:then menu}
-        {#each menu.breakfast as breakfast}
-          <div class:highlight={breakfast.selected}>
-            <Item {...breakfast} />
+        {#each menu.breakfast as food}
+          <div class:highlight={food.selected}>
+            <Item {...food} />
             <button
-              on:click={() => addToMenu(breakfast)}
-              disabled={custom.includes(breakfast)}
+              on:click={() => addToMenu(food)}
+              disabled={custom.includes(food)}
             >
               add to menu
             </button>
@@ -86,16 +88,16 @@
         />
       </h3>
       {#if custom.length > 0}
-        {#each custom as item, index}
+        {#each custom as food, index}
           <Item
-            item={item.item}
-            description={item.description}
-            price={`${item.price} + $${(item.price * gst).toFixed(2)} GST`}
-            img={item.img}
+            item={food.item}
+            description={food.description}
+            price={`${food.price} + $${(food.price * gst).toFixed(2)} GST`}
+            img={food.img}
           />
           <button
             on:click={() => {
-              removeFromMenu(index);
+              removeFromMenu(index, food);
             }}>remove</button
           >
         {/each}
@@ -122,7 +124,8 @@
 
   .highlight {
     background-color: rgba(147, 175, 147, 0.397);
-    border: solid red 70px;
+    border-radius: 30px;
+    transition: 0.25s;
   }
 
   p {
