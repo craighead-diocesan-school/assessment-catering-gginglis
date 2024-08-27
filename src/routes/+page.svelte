@@ -12,16 +12,22 @@
 
   let custom = [];
 
-  // let selected = !selected;
-
   let gst = 0.15;
+
+  // let selected = false;
+
+  function highlightSelected() {
+    selected = !selected;
+  }
 
   function addToMenu(food) {
     custom = [...custom, food];
+    highlightSelected();
   }
 
   function removeFromMenu(index) {
     custom = [...custom.slice(0, index), ...custom.slice(index + 1)];
+    custom[index].selected = false;
   }
 
   let customName = [];
@@ -47,8 +53,10 @@
             <Item {...breakfast} />
             <button
               on:click={() => addToMenu(breakfast)}
-              disabled={custom.includes(breakfast)}>add to menu</button
+              disabled={custom.includes(breakfast)}
             >
+              add to menu
+            </button>
           </div>
         {/each}
 
@@ -77,15 +85,13 @@
           placeholder="enter menu name"
         />
       </h3>
-      {#if custom.length >= 1}
-        {#each custom as chosen, index}
-          <!-- <p>GST = ${addedGst.toFixed(2)}</p> -->
-          <!-- <Item {...chosen} p{chosen.price * gst} /> -->
+      {#if custom.length > 0}
+        {#each custom as item, index}
           <Item
-            item={chosen.item}
-            description={chosen.description}
-            price={`${chosen.price} + $${(chosen.price * gst).toFixed(2)} GST`}
-            img={chosen.img}
+            item={item.item}
+            description={item.description}
+            price={`${item.price} + $${(item.price * gst).toFixed(2)} GST`}
+            img={item.img}
           />
           <button
             on:click={() => {
@@ -115,7 +121,8 @@
   }
 
   .highlight {
-    background-color: rgba(147, 175, 147, 0.738);
+    background-color: rgba(147, 175, 147, 0.397);
+    border: solid red 70px;
   }
 
   p {
@@ -149,5 +156,9 @@
     border: solid rgb(111, 144, 111, 0.353) 2px;
     text-shadow: 0.7px 0.7px rgba(82, 118, 82, 0.733);
     transition: 0.2s;
+  }
+
+  h3 {
+    margin-top: 30px;
   }
 </style>
