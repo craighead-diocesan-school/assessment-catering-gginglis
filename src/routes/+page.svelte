@@ -11,27 +11,24 @@
   let menu = getMenu();
 
   let custom = [];
+  // starts the menu as an empty array
 
   let gst = 0.15;
 
   let customName = [];
-  // let food.selected = false;
-
-  // function highlightSelected() {
-  // food.selected = !food.selected;
-  // }
 
   function addToMenu(food) {
     custom = [...custom, food];
     food.selected = true;
     menu = menu;
-    // highlightSelected(food);
+    // adds the chosen object to the custom menu and highlights it
   }
 
   function removeFromMenu(index, food) {
     custom = [...custom.slice(0, index), ...custom.slice(index + 1)];
     food.selected = false;
     menu = menu;
+    // removes the item from the custom menu and returns it to its original visibility
   }
 </script>
 
@@ -47,34 +44,43 @@
   <div class="columns">
     <div class="column">
       <h2>Menu Options</h2>
+
+      <!-- waits for the menu item to load, then displays the items invidually once loaded -->
       {#await menu}
         loading
+        <!-- displays loading message while data is being recieved from the external source -->
       {:then menu}
-        {#each menu.breakfast as food}
-          <div class:highlight={food.selected}>
-            <Item {...food} />
+        {#each menu.breakfast as breakfast}
+          <div class:highlight={breakfast.selected}>
+            <!-- only highlights items that are in the custom menu -->
+            <Item {...breakfast} />
             <button
-              on:click={() => addToMenu(food)}
-              disabled={custom.includes(food)}
+              on:click={() => addToMenu(breakfast)}
+              disabled={custom.includes(breakfast)}
             >
+              <!-- adds the item to the menu, and disables the button when the item is already present -->
               add to menu
             </button>
           </div>
         {/each}
 
         {#each menu.dinner as dinner}
-          <Item {...dinner} />
-          <button
-            on:click={() => addToMenu(dinner)}
-            disabled={custom.includes(dinner)}>add to menu</button
-          >
+          <div class:highlight={dinner.selected}>
+            <Item {...dinner} />
+            <button
+              on:click={() => addToMenu(dinner)}
+              disabled={custom.includes(dinner)}>add to menu</button
+            >
+          </div>
         {/each}
         {#each menu.dessert as dessert}
-          <Item {...dessert} />
-          <button
-            on:click={() => addToMenu(dessert)}
-            disabled={custom.includes(dessert)}>add to menu</button
-          >
+          <div class:highlight={dessert.selected}>
+            <Item {...dessert} />
+            <button
+              on:click={() => addToMenu(dessert)}
+              disabled={custom.includes(dessert)}>add to menu</button
+            >
+          </div>
         {/each}
       {/await}
     </div>
@@ -143,8 +149,8 @@
     text-shadow: 0.7px 0.7px rgb(82, 118, 82);
     border: solid rgb(111, 144, 111) 2px;
     border-radius: 10px;
-    margin-left: 20px;
-    transition: 0.2s;
+    margin: 0px 20px 20px;
+    transition: 0.25s;
     padding: 3px 10px;
   }
 
