@@ -5,6 +5,7 @@
     export let img;
 </script>
 
+<!-- displays each food item as a seperate object -->
 <main>
     <h2>{item}</h2>
     <h3>{description}</h3>

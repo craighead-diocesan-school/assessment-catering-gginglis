@@ -93,6 +93,7 @@
           placeholder="enter menu name"
         />
       </h3>
+      <!-- displays items chosen for custom menu with their respective gst amount, and allows the user to remove items if they change their mind -->
       {#if custom.length > 0}
         {#each custom as food, index}
           <Item
@@ -109,6 +110,7 @@
         {/each}
       {:else}
         <p>menu has no items</p>
+        <!-- displays a message when the custom menu has no items -->
       {/if}
     </div>
   </div>
